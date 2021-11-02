@@ -1,0 +1,67 @@
+<div class="text-center centerdiv">
+  <main class="form-signin text-center">
+    <form [formGroup]="userForm">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="70"
+        height="70"
+        fill="currentColor"
+        class="bi bi-person-plus-fill"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"
+        />
+      </svg>
+      <h1 class="h3 mb-3 fw-normal">Please Register</h1>
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="fname"
+          id="fname"
+          placeholder="Username"
+        />
+        <label for="floatingUsername">Username</label>
+      </div>
+      <div class="form-floating">
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          placeholder="name@example.com"
+        />
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input
+          type="password"
+          class="form-control"
+          id="pwd"
+          formControlName="pwd"
+          placeholder="Password"
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <button
+        class="w-100 btn btn-lg btn-primary"
+        type="submit"
+        (click)="saveUser()"
+        [disabled]="!userForm.valid"
+      >
+        Register
+      </button>
+      <div class="card-footer text-center py-3">
+        <div class="small">
+          <a routerLink="/">Have you a account? Please Login!</a>
+        </div>
+      </div>
+    </form>
+  </main>
+</div>

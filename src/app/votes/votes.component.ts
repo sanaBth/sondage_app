@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Vote } from '../models/vote';
-import { AuthenticationService } from '../service/authentication.service';
+import { SondageService } from '../service/sondage.service';
 
 @Component({
   selector: 'app-votes',
@@ -10,7 +10,8 @@ import { AuthenticationService } from '../service/authentication.service';
 })
 export class VotesComponent implements OnInit {
 
-  constructor(private _authservice : AuthenticationService) { }
+  constructor(
+    private _sondageservice : SondageService) { }
   postForm : FormGroup;
   currentPost : Vote;
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class VotesComponent implements OnInit {
   {
    
     console.log(this.postForm.value);
-    this._authservice.addVotes(this.postForm.value).subscribe(
+    this._sondageservice.addVotes(this.postForm.value).subscribe(
       (res)=>{console.log(res);
         //this.router.navigate(['/home']);
       },

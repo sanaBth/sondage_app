@@ -16,17 +16,35 @@
   </div>
 </section>
 <div class="container marketing">
-  <div class="row" *ngFor="let vote of votes">
+  <div class="row" *ngFor="let vote of votes; let i = index">
     <div class="col-lg-4">
-      <h2 class="mx-2">Titre de vote : {{ vote.titre }}</h2>
+      <h2 class="mx-2">Titre de sondage : {{ vote.titre }}</h2>
 
       <div>
-        <h4 class="my-3">Le sujet est :{{ vote.description }}</h4>
-        <h4 class="my-3">La description est :{{ vote.choix }}</h4>
+        <h4 class="my-3">Question : {{ vote.description }}</h4>
+        <p>Oui : {{ vote.oui }} / Non : {{ vote.non }} / Résultat :</p>
+        <h4 class="my-3">
+          <div class="form-group mt-3">
+            <input
+              type="radio"
+              value="oui"
+              (change)="onItemChange($event, i)"
+              [name]="i"
+            />
+            <label for="oui">Oui</label><br />
+            <input
+              type="radio"
+              value="non"
+              (change)="onItemChange($event, i)"
+              [name]="i"
+            />
+            <label for="non">Non</label><br />
+          </div>
+        </h4>
         <div></div>
       </div>
       <div class="float-right">
-        <button type="button">Valider</button>
+        <button (click)="saveResponse(vote._id)" type="button">Valider</button>
       </div>
     </div>
   </div>

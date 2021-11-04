@@ -18,8 +18,7 @@ import { Vote } from '../models/vote';
 export class AuthenticationService {
 
   api_url: string = 'http://localhost:4000/apiuser';
-  api_url_vote: string = 'http://localhost:4000/api/sujets';
-  api_vote: string = 'http://localhost:4000/api/sujet';
+
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
  
@@ -50,31 +49,11 @@ export class AuthenticationService {
     return this.httpClient.post<any>(`${this.api_url}/login`, user);
     
   }
-  getVotes()
-  {
-    return this.httpClient.get(`${this.api_url_vote}`);
-  }
+  
   /* addVotes(vote:Vote)
   {
     return this.httpClient.post(`${this.api_vote}`,vote);
   } */
-  addVotes(vote:Vote): Observable<any> {
-    let url = `${this.api_vote}`;
-    console.log(url);
-    return this.httpClient.post(url, vote)
-      .pipe(
-        catchError(this.handleError)
-      )
-  }
-  /* addVotes(vote:Vote): Promise<Vote> {
-    return this.httpClient.post(this.api_vote, vote)
-        .toPromise()
-        .then(response => response.json())
-        .catch(this.error);
-}
-private error(error: any) {
-  let message = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-  console.error(message);
-} */
+  
+ 
 }

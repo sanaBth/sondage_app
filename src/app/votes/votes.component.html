@@ -1,1 +1,75 @@
-<p>votes works!</p>
+<app-navbar></app-navbar>
+<main class="mb-4">
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <p>
+          Ceéer vos article à travers ce formulaier, Exprimez vous et écrivez ce
+          que vous vient a vos esprits!
+        </p>
+        <p>Go ahead</p>
+
+        <div class="my-5">
+          <form [formGroup]="postForm">
+            <div class="form-floating mt-3">
+              <input
+                class="form-control"
+                id="name"
+                type="text"
+                placeholder="Titre..."
+                name="titre"
+                formControlName="titre"
+              />
+              <label for="name">Titre</label>
+              <div
+                class="text-info"
+                *ngIf="
+                  postForm.controls.titre &&
+                  postForm.controls.titre.invalid &&
+                  postForm.controls.titre.touched
+                "
+              >
+                Ce champs est obligatoire
+              </div>
+            </div>
+            <div class="form-floating mt-3">
+              <textarea
+                class="form-control"
+                id="description"
+                placeholder="Rédigez..."
+                style="height: 4rem"
+                name="description"
+                formControlName="description"
+              ></textarea>
+              <label for="message">Description</label>
+              <div
+                class="text-info"
+                *ngIf="
+                  postForm.controls.description &&
+                  postForm.controls.description.invalid &&
+                  postForm.controls.description.touched
+                "
+              >
+                Ce champs est obligatoire
+              </div>
+            </div>
+
+            <br />
+            <div class="text-center">
+              <!-- Submit Button-->
+
+              <button
+                class="align-center btn btn-primary"
+                type="submit"
+                (click)="savePost()"
+              >
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>

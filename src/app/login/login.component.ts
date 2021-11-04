@@ -26,8 +26,16 @@ export class LoginComponent implements OnInit {
   public login()
   {
    
-      this._authService.login(this.userForm.value)
-      this.router.navigate(['/home']);
+      this._authService.login(this.userForm.value).subscribe(
+        (res)=>{console.log(res);
+          this.router.navigate(['/home']);
+        },
+        (err)=>{console.log(err.error.msg);
+        //notification error
+      
+      }
+      )
+      
 
   }
 }

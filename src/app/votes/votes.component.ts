@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Vote } from '../models/vote';
+import { AuthenticationService } from '../service/authentication.service';
 
 @Component({
   selector: 'app-votes',
@@ -7,9 +10,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VotesComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private _authservice : AuthenticationService) { }
+  postForm : FormGroup;
+  currentPost : Vote;
   ngOnInit(): void {
+    this.postForm = new FormGroup
+    ({
+      titre: new FormControl('',Validators.required),
+      description: new FormControl('',Validators.required),
+      choix : new FormControl('',Validators.required),
+      
+    })
+  }
+  savePost()
+  {
+   
+    console.log(this.postForm.value);
+    this._authservice.addVotes(this.postForm.value).subscribe(
+      (res)=>{console.log(res);
+        //this.router.navigate(['/home']);
+      },
+      (err)=>{console.log(err);
+      //notification error
+    
+    }
+    );
   }
 
 }

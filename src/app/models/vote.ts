@@ -5,10 +5,13 @@ export class Vote {
     description:string;
     oui:string;
     non:string;
-  
-    constructor(_id:string,titre :string,description : string,oui:string,non:string)
+    pourcentoui : number;
+    pourcentnon : number;
+    constructor(_id:string,titre :string,description : string,oui:string,non:string,pourcentoui : number,pourcentnon : number)
     {
-      this._id=_id;
+      this.pourcentoui =pourcentoui;
+      this.pourcentnon=pourcentnon;
+           this._id=_id;
         this.titre=titre;
         this.description=description;
         this.oui=oui;

@@ -22,7 +22,12 @@
 
       <div>
         <h4 class="my-3">Question : {{ vote.description }}</h4>
-        <p>Oui : {{ vote.oui }} / Non : {{ vote.non }} / Résultat :</p>
+        <p>
+          Oui : {{ vote.oui }} / Non : {{ vote.non }} / Résultat : Oui
+          {{ vote.pourcentoui | number }} % && Non
+          {{ vote.pourcentnon | number }}
+          %
+        </p>
         <h4 class="my-3">
           <div class="form-group mt-3">
             <input
@@ -31,14 +36,14 @@
               (change)="onItemChange($event, i)"
               [name]="i"
             />
-            <label for="oui">Oui</label><br />
+            <label for="oui">&nbsp; Oui</label><br />
             <input
               type="radio"
               value="non"
               (change)="onItemChange($event, i)"
               [name]="i"
             />
-            <label for="non">Non</label><br />
+            <label for="non">&nbsp; Non</label><br />
           </div>
         </h4>
         <div></div>
@@ -47,6 +52,7 @@
         <button (click)="saveResponse(vote._id)" type="button">Valider</button>
       </div>
     </div>
+    <hr class="mt-4" />
   </div>
 </div>
 <app-footer></app-footer>

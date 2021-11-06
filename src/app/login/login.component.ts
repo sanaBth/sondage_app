@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { User } from '../models/user';
 import { AuthenticationService } from '../service/authentication.service';
 
@@ -11,7 +12,7 @@ import { AuthenticationService } from '../service/authentication.service';
 })
 export class LoginComponent implements OnInit {
   userForm:FormGroup;
-  constructor(private _authService:  AuthenticationService,private router: Router
+  constructor(private _authService:  AuthenticationService,private router: Router,private toastr: ToastrService
   ) { }
   currentUser : User ;
   public users : User[] ;
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
       this._authService.login(this.userForm.value).subscribe(
         (res)=>{console.log(res);
           this.router.navigate(['/home']);
+          this.toastr.success('Bienvenue');
         },
         (err)=>{console.log(err.error.msg);
         //notification error

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../models/user';
 import { AuthenticationService } from '../service/authentication.service';
+import { LocalstorageService } from '../service/localstorage.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,10 @@ import { AuthenticationService } from '../service/authentication.service';
 })
 export class LoginComponent implements OnInit {
   userForm:FormGroup;
-  constructor(private _authService:  AuthenticationService,private router: Router,private toastr: ToastrService
+  constructor(private _authService:  AuthenticationService,
+    private router: Router,
+    private toastr: ToastrService,
+    private _loginservice :LocalstorageService
   ) { }
   currentUser : User ;
   public users : User[] ;
@@ -28,15 +32,20 @@ export class LoginComponent implements OnInit {
   {
    
       this._authService.login(this.userForm.value).subscribe(
-        (res)=>{console.log(res);
-          this.router.navigate(['/home']);
-          this.toastr.success('Bienvenue');
+        (res)=>{
+          console.log(res);
+         
+    this._loginservice.setUseconnected(res.user);
+         this.router.navigate(['/home']);
+        this.toastr.success('Bienvenue');
         },
         (err)=>{console.log(err.error.msg);
         //notification error
       
       }
-      )
+      );
+       
+  
       
 
   }

@@ -3,14 +3,11 @@ export class Vote {
     titre:string;
     
     description:string;
-    oui:string;
-    non:string;
-    pourcentoui : number;
-    pourcentnon : number;
-    constructor(_id:string,titre :string,description : string,oui:string,non:string,pourcentoui : number,pourcentnon : number)
+    oui:number;
+    non:number;
+    
+    constructor(_id:string,titre :string,description : string,oui:number,non:number)
     {
-      this.pourcentoui =pourcentoui;
-      this.pourcentnon=pourcentnon;
            this._id=_id;
         this.titre=titre;
         this.description=description;

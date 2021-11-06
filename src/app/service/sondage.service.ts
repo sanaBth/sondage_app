@@ -14,7 +14,7 @@ import { Vote } from '../models/vote';
 export class SondageService {
   api_url_vote: string = 'http://localhost:4000/apisujet/sujets';
   api_vote: string = 'http://localhost:4000/apisujet/sujet';
-
+  api_user : string = 'http://localhost:4000/apiuser/user';
   constructor(private httpClient: HttpClient) { }
 
   getVotes()
@@ -22,8 +22,8 @@ export class SondageService {
     return this.httpClient.get(`${this.api_url_vote}`);
   }
 
-  addVotes(vote:Vote): Observable<any> {
-    let url = `${this.api_vote}`;
+  addVotes(vote:Vote,id:any): Observable<any> {
+    let url = `${this.api_vote}/${id}`;
     console.log(url);
     return this.httpClient.post(url, vote)
       .pipe(
@@ -39,7 +39,16 @@ export class SondageService {
         catchError(this.handleError)
       )
   }
+  //add sujet votés to user
+  addSujetToUser(_idu:string,_ids:string)
+  {
+    let url = `${this.api_user}/${_idu}/${_ids}`;
 
+    return this.httpClient.put(url,null)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
   voterNon(_id:string)
   {
     let url = `${this.api_vote}/votenon/${_id}`;

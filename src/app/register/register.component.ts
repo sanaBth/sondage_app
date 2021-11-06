@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from '../models/user';
 
 import { AuthenticationService } from '../service/authentication.service';
+import { LocalstorageService } from '../service/localstorage.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
 
   public users = [];
   public errorMsg : String;
-  constructor(private _authService:AuthenticationService,private router: Router) { }
+  constructor(private _authService:AuthenticationService,private router: Router,private _loginservice :LocalstorageService) { }
   userForm:FormGroup;
   currentUser : User ;
   ngOnInit(): void {
@@ -37,7 +38,7 @@ export class RegisterComponent implements OnInit {
   } */
   public saveUser()
   { 
-  userForm:FormGroup;
+    //this._loginservice.register(this.currentUser);
    this._authService.register(this.userForm.value).subscribe((res) => {
     if (res) {
    //  this.signupForm.reset()

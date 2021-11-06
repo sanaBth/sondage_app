@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { User } from '../models/user';
 import { Vote } from '../models/vote';
 import { AuthenticationService } from '../service/authentication.service';
+import { LocalstorageService } from '../service/localstorage.service';
 import { SondageService } from '../service/sondage.service';
 
 @Component({
@@ -11,29 +14,21 @@ import { SondageService } from '../service/sondage.service';
 export class HomeComponent implements OnInit {
   votes: Vote[];
   public sujets: Vote[];
- 
+ users:User[]
   vote:string;
   pourcentNon :any = 0;
   responseOui : any
   responseNon : any
   pourcentOui:any = 0;
   constructor(
-    private _sondageservice : SondageService) { }
+    private _sondageservice : SondageService,private _localstorage : LocalstorageService,
+    private toastr: ToastrService,) { }
 
   ngOnInit(): void {
     this._sondageservice.getVotes().subscribe((data:any) => {
       this.votes = data;
       console.log(this.votes);
-    this.votes.forEach(element => {
-      this.responseOui = element.oui;
-      this.responseNon = element.non;
-      this.pourcentOui = ((this.responseOui* 100 ) / (this.responseOui+ this.responseNon));
-      element.pourcentoui=this.pourcentOui;
-      this.pourcentNon = ((this.responseNon* 100 ) / (this.responseOui+ this.responseNon));
-      element.pourcentnon=this.pourcentNon;
-    console.log(this.pourcentOui);
-        console.log(this.pourcentNon);
-    });
+ 
     });
    
   }
@@ -50,37 +45,46 @@ export class HomeComponent implements OnInit {
   {
     
     console.log(id,this.vote);
-    
     if(this.vote == 'oui')
     {
       this._sondageservice.voterOui(id).subscribe(
         (res)=>{console.log(res);
-          //this.router.navigate(['/home']);
         },
         (err)=>{console.log(err.error.msg);
         //notification error
-      
       }
       );
-      this._sondageservice.getVotes().subscribe((data:any) => {
-        this.votes = data; });
-      
     }
     else
     {
       this._sondageservice.voterNon(id).subscribe(
         (res)=>{console.log(res);
-          //this.router.navigate(['/home']);
         },
         (err)=>{console.log(err.error.msg);
         //notification error
-      
       }
       );
-      this._sondageservice.getVotes().subscribe((data:any) => {
-        this.votes = data; });
     }
+    //refresh page
+    this._sondageservice.getVotes().subscribe((data:any) => {
+        this.votes = data; });
+        console.log(this.votes);
+    //first click
+    this._localstorage.setFirstClickDate();
+    //calcul number click
+    if (this._localstorage.numberClick())
+    {
+     this.toastr.success('vous pouvez encore voter');
+    }else
+    {
+      this.toastr.error('vous avez dépassez les limites de votes');
+    }
+    //add sujet to sujets votés
+    this._sondageservice.addSujetToUser(this._localstorage.getUseconnected()._id,id).subscribe((data:any) => 
+    {
+     console.log(data);},(err) => 
+     {
+      console.log(err);}
+     );
   }
-
-
 }

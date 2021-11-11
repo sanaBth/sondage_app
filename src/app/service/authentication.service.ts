@@ -17,7 +17,7 @@ import { Vote } from '../models/vote';
 })
 export class AuthenticationService {
 
-  api_url: string = 'http://localhost:4000/apiuser';
+  api_url: string = 'http://localhost:4000';
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
@@ -27,7 +27,7 @@ export class AuthenticationService {
   constructor(private httpClient: HttpClient,public router: Router){}
 
   register(user: User){
-    return this.httpClient.post(`${this.api_url}/createUser`, user);
+    return this.httpClient.post(`${this.api_url}/apiuser/createUser`, user);
   }
  
   getAccessToken() {
@@ -46,10 +46,13 @@ export class AuthenticationService {
   }
   // Sign-in
   login(user: User) {
-    return this.httpClient.post<any>(`${this.api_url}/login`, user);
+    return this.httpClient.post<any>(`${this.api_url}/apiuser/login`, user);
     
   }
-  
+ /*  getProfile(user: User)
+  {
+    return this.httpClient.get<any>(`${this.api_url}/apiuser/profile`, user);
+  } */
   /* addVotes(vote:Vote)
   {
     return this.httpClient.post(`${this.api_vote}`,vote);

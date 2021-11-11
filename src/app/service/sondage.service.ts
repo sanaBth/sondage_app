@@ -12,28 +12,33 @@ import { Vote } from '../models/vote';
   providedIn: 'root'
 })
 export class SondageService {
-  api_url_vote: string = 'http://localhost:4000/apisujet/sujets';
-  api_vote: string = 'http://localhost:4000/apisujet/sujet';
-  api_user : string = 'http://localhost:4000/apiuser/user';
+  api_url: string = 'http://localhost:4000';
+  
   constructor(private httpClient: HttpClient) { }
 
   getVotes()
   {
-    return this.httpClient.get(`${this.api_url_vote}`);
+    return this.httpClient.get(`${this.api_url}/apisujet/sujets`);
   }
 
   addVotes(vote:Vote,id:any): Observable<any> {
-    let url = `${this.api_vote}/${id}`;
+    let url = `${this.api_url}/apisujet/sujet/${id}`;
     console.log(url);
     return this.httpClient.post(url, vote)
       .pipe(
         catchError(this.handleError)
       )
   }
+/*   getSujetsVotes()
+  {
+    let user = this.getUseconnected(); 
+    let sujetVotes = user.sujetsVotes;
 
+    return sujetVotes;
+  } */
   voterOui(_id:string)
   {
-    let url = `${this.api_vote}/voteoui/${_id}`;
+    let url = `${this.api_url}/apisujet/sujet/voteoui/${_id}`;
     return this.httpClient.put(url,null)
       .pipe(
         catchError(this.handleError)
@@ -42,16 +47,24 @@ export class SondageService {
   //add sujet votés to user
   addSujetToUser(_idu:string,_ids:string)
   {
-    let url = `${this.api_user}/${_idu}/${_ids}`;
+    let url = `${this.api_url}/apiuser/user/${_idu}/${_ids}`;
 
     return this.httpClient.put(url,null)
       .pipe(
         catchError(this.handleError)
       )
   }
+  //get Sujets votés from user
+  verifyIsvoted(_idu:string,_ids:string)
+  {
+    let url = `${this.api_url}/apiuser/user/${_idu}/${_ids}`;
+
+    return this.httpClient.get(url);
+      
+  }
   voterNon(_id:string)
   {
-    let url = `${this.api_vote}/votenon/${_id}`;
+    let url = `${this.api_url}/apisujet/sujet/votenon/${_id}`;
     return this.httpClient.put(url,null)
       .pipe(
         catchError(this.handleError)

@@ -16,6 +16,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+
+import { NotfoundComponent } from './notfound/notfound.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,9 @@ import { ToastrModule } from 'ngx-toastr';
     HomeComponent,
     NavbarComponent,
     FooterComponent,
-    VotesComponent
+    VotesComponent,
+   
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,

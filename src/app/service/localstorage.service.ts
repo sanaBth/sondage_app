@@ -18,7 +18,13 @@ export class LocalstorageService {
   {
     return JSON.parse(localStorage.getItem('userconnected') || 'null');  
   }
-  
+  getSujetsVotes()
+  {
+    let user = this.getUseconnected();
+    return user.sujetsVotes;
+
+    //console.log( user.sujetsVotes);
+  }
   public logout()
   {
      localStorage.removeItem('userconnected')
